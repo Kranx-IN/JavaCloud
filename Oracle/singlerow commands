@@ -1,0 +1,9 @@
+select lower('ORacLe') from dual;
+
+select upper('ORacLe') from dual;
+
+select initcap('hello world!') from dual;
+
+select concat('oracle','database') from dual;
+
+select substr('oracle database backup',-9) from dual; 

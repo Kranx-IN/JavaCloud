@@ -1,0 +1,140 @@
+//Assignments
+
+Create table Emp
+(
+Empno Number(4) primary key,
+Ename Varchar2(10) not null,
+job Varchar2(9),
+mgr Number(4),
+Hiredate Date,
+Sal Number(7,2),
+Comm Number(7,2),
+Deptno Number(2)
+);
+
+create table Department_Master
+(
+Dept_code number(2),
+Dept_name varchar2(50)
+);
+
+create table Student_master
+(
+Student_code number(6) primary key,
+Student_name varchar2(50) not null,
+Dept_code number(2),
+Student_dob Date,
+Student_Address varchar2(240)
+);
+
+create table Staff_master
+(
+staff_code number(8),
+staff_name varchar2(50),
+design_code number,
+hiredate date,
+staff_dob date,
+staff_address varchar2(240),
+mgr_code number(8),
+staff_sal number(10,2)
+);
+
+create table book_master
+(
+book_code number(10),
+book_name varchar2(50),
+book_pub_year number,
+book_pub_author varchar2(50)
+);
+
+create table book_transactions
+(
+book_code number,
+student_code number,
+staff_code number,
+book_issue_date Date not null,
+book_expected_return_date Date not null,
+book_actual_return_date Date not null
+);
+
+//Altering tables
+
+alter table book_transactions
+add constraint book_code_fk foreign key (Book_code)
+references Book_Master (Book_code);
+
+alter table Book_Master
+add constraint book_code_pk primary key (book_code);
+
+alter table book_transactions
+add constraint student_code_fk foreign key (Student_code)
+references Student_Master (Student_code);
+
+alter table book_transactions
+add constraint staff_code_fk foreign key (Staff_code)
+references Staff_Master (Staff_code);
+
+alter table Staff_Master
+add constraint staff_code_pk primary key (staff_code);
+
+alter table Staff_Master
+modify Design_code Number(3);
+
+alter table Staff_Master
+add Dept_code Number(2);
+
+alter table Staff_Master
+add constraint design_code_fk foreign key (Design_code)
+references Designation_Master (Design_code);
+
+alter table Staff_Master
+add constraint dept_code_fk foreign key (Dept_code)
+references Department_Master (Dept_code);
+
+alter table Student_Marks
+add constraint student_marks_fk foreign key (student_code)
+references Student_Master (student_code);
+
+alter table Student_master
+add constraint dept_student_fk foreign key (Dept_code)
+references Department_master (Dept_code);
+
+alter table Department_Master
+add constraint dept_code_pk Primary Key (Dept_code);
+
+alter table Emp 
+add constraint Deptno_emp_fk Foreign Key (Deptno) 
+references Department_Master (Dept_code);
+
+alter table Department_Master
+add constraint dept_name_uk unique (Dept_name);
+
+alter table Emp
+add constraint sal_emp_ck check (Sal >= 3000);
+
+//Entering data
+
+insert into Department_Master(Dept_code,Dept_name) values (10,'LND');
+insert into Department_Master(Dept_code,Dept_name) values (20,'Development');
+insert into Department_Master(Dept_code,Dept_name) values (30,'Testing');
+insert into Department_Master(Dept_code,Dept_name) values (40,'Admin');
+insert into Department_Master(Dept_code,Dept_name) values (50,'HRA');
+
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1001,'Robert','Tester',8524,'12-Feb-2013',26000,8000,30);
+insert into Emp(Empno,Ename,job,hiredate,Sal,Comm,Deptno) values (1012,'William','Tester','16-Aug-2001',17850,4500,30);
+insert into Emp(Empno,Ename,job,hiredate,Sal,Comm,Deptno) values (1023,'Johnson','Tester','26-Jun-1980',20000,1000,30);
+insert into Emp(Empno,Ename,job,hiredate,Sal,Comm,Deptno) values (1025,'Remi','Tester','2-Mar-1995',18000,1200,30);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1018,'Samy','Tester',8524'7-Sep-1998',25000,3500,30);
+
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1003,'Rambo','Trainer',5824,'27-Jun-1997',26000,2600,10);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1014,'Bumbo','Trainer',5824,'18-Dec-2004',17500,1750,10);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1022,'Mumbo','Trainer',5824,'20-Apr-2009',20000,2000,10);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1008,'Tumbo','Trainer',5824,'7-May-2016',25200,2520,10);
+insert into Emp(Empno,Ename,job,hiredate,Sal,Comm,Deptno) values (1016,'Gumbo','Trainer','17-Feb-2018',25200,2520,10);
+
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1002,'Joni','Developer',4258,'17-Sep-1990',35000,3500,20);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1005,'Dexter','Developer',4258,'27-Apr-2001',27000,2700,20);
+insert into Emp(Empno,Ename,job,hiredate,Sal,Comm,Deptno) values (1011,'Jane','Developer','09-Jan-2020',45000,4500,20);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1020,'Bravo','Developer',4258,'31-July-2005',28000,2800,20);
+insert into Emp(Empno,Ename,job,mgr,hiredate,Sal,Comm,Deptno) values (1009,'Will','Developer',4258,'25-Oct-2009',33000,3300,20);
+

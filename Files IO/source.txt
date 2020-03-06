@@ -1,0 +1,4 @@
+This is sample program to check 
+whether the program can copy exactly 10 characters 
+at a time including spaces and numbers and even special characters......
+@@@##$%#$^^#%#&&$^&$%&^$%&$^#$%#...______KKl'dd$$t

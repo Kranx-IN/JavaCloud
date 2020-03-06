@@ -1,0 +1,135 @@
+
+//logging as admin
+username: sys as sysdba
+password: <empty>;
+
+//altering an user to unlock
+alter user hr account unlock;
+
+//changing password
+alter user hr identified by <new password>;
+
+alter table dept_master
+add constraint did_dname_pk primary key (dept_id,Dept_name)
+
+user_constraint ==> dictionary of all 5 types of constraint information
+user_cons_columns;
+
+select uc.constraint_name,uc.constraint_type,ucc.column_name
+from user_cons_columns ucc,user_constraints uc
+where uc.constraint_name = ucc.constraint_name and uc.table_name = 'STAFF_MASTER';
+-------------------------------------------------------------------------
+
+//Single row functions
+
+select employee_id,first_name || last_name, salary*12 from employees;
+select employee_id,first_name || ' ' || last_name, salary*12 from employees;
+select employee_id,first_name || ' ' || last_name as "Full Name", salary*12 as "Annual Income" from employees;
+select employee_id,upper(first_name) || ' ' || lower(last_name) from employees;
+select last_name,upper(last_name),lower (last_name),initcap(last_name) from employees;
+
+//Group Functions:
+min,max,avg,sum,count;
+
+select max(salary), min(salary),avg(salary),sum(salary),count(salary) from employees;
+select max(salary), min(salary),avg(salary),sum(salary),count(salary) from employees where department_id = 30;
+select department_id,max(salary) from employees group by department_id;
+select department_id,job_id,max(salary) from employees group by department_id,job_id;
+select department_id,job_id,max(salary) from employees group by department_id,job_id order by department_id;
+select department_id,job_id,max(salary),count(salary) from employees where department_id is not null group by department_id,job_id order by department_id;\
+
+select department_id,job_id,max(salary),count(salary)
+from employees
+where department_id is not null
+group by department_id,job_id
+having count(salary) > 2
+order by department_id;
+
+select last_name,salary
+from employees
+where salary  = 24000;
+
+select last_name,salary
+from employees
+where salary = (select max(salary) from employees);
+
+select last_name,salary
+from employees
+where salary = any (select max(salary) from employees group by department_id);
+
+select last_name,salary
+from employees
+where salary > all (select salary from employees where last_name = 'Jones');
+
+----------------------------------------------------------------------
+
+//Creating a new user
+create user <username> identified by <password>;
+
+//Dropping a user
+drop user <username> CASCADE;
+
+(<username> lacks create session privilege)
+//Login permission
+grant create session to <username>;
+revoke create session from <username>;
+
+(insufficent privileges)
+//Creating table permission
+grant create table to <username>;
+
+(no privileges on tablespace 'system')
+//Tablespace privilege
+grant unlimited tablespace to sasha;
+
+grant select on employees to sasha;
+
+grant select,update(salary) on employees to sasha;
+
+update employees set salary = (salary*0.1) + salary where employee_id = 201;
+
+insert into details(empno,ename) select employee_id,last_name from hr.employees;
+
+select count(*) from details;
+select * from details;
+
+select employee_id,last_name, (select department_name from departments where department_id = employees.department_id) as "Department ", salary from employees;
+
+//cross join
+select employee_id,last_name,salary,department_name from employees,departments;
+
+//equi join
+select employee_id,last_name,salary,department_name
+from employees,departments
+where departments.department_id = employees.department_id;
+
+select employee_id,last_name,salary
+from employees
+where 1 = 1 ;
+
+select employee_id,last_name,salary
+from employees
+where null = null ;
+
+select employee_id,last_name,salary
+from employees
+where department_id is null ;
+
+select e.employee_id,e.last_name,e.salary,d.department_name,d.department_id
+from employees e,departments d
+where d.department_id = e.department_id
+order by d.department_id desc;
+
+select e.last_name,d.department_name,l.city
+from employees e,departments d,locations l
+where d.department_id = e.department_id and d.location_id = l.location_id;
+
+//left outer join
+select e.last_name,d.department_name 
+from employees e,departments d
+where e.department_id (+) = d.department_id;
+
+//right outer join
+select e.last_name,d.department_name 
+from employees e,departments d
+where e.department_id = d.department_id(+);

@@ -1,0 +1,13 @@
+create table dept(dept_id,dept_name)
+as
+select department_id,department_name
+from departments;
+
+select count(*) from dept;
+
+create table emp(emp_id,emp_name,sal,dept_id,doj)
+as
+select employee_id,last_name,salary,department_id,hire_date
+from employees;
+
+select count(*) from emp;

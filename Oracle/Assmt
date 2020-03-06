@@ -1,0 +1,169 @@
+Create Table Emp
+(
+	Empno Number(4) Primary Key,
+	Ename Varchar2(10) Not Null,
+	Job Varchar2(9),
+	mgr Number(4),
+	Hiredate Date,
+	sal Number(7, 2),
+	Comm Number(7,2),
+	Deptno Number(2)
+);
+
+create table designation_master(
+	design_code Number(3) primary key,
+	design_name varchar2(50)
+);
+
+Create table department_master(
+	Dept_code Number(2) primary key,
+	Dept_name Varchar2(50)
+);
+
+create table student_master(
+	student_code number(6) primary key,
+	student_name varchar2(50) not null,
+	dept_code number(2) references department_master,
+	student_dob date,
+	student_address varchar2(240)
+);
+
+create table student_marks(
+	student_code number(6) references student_master,
+	student_year number primary key,
+	subject1 number(3),
+	subject2 number(3),
+	subject3 number(3)
+);
+
+create table staff_master(
+	staff_code number(8) primary key,
+	staff_name varchar2(50) not null,
+	design_code number(3) references designation_master,
+	dept_code number(2) references department_master,
+	hiredate Date,
+	staff_dob date,
+	staff_address varchar2(240),
+	mgr_code number(8),
+	staff_sal number(10,2)
+);
+
+create table book_master(
+	book_code number(10) primary key,
+	book_name varchar2(50) not null,
+	book_pub_year number,
+	book_pub_author varchar(50) not null
+);
+
+create table book_transactions(
+	book_code number(10) references book_master,
+	student_code number(6) references student_master,
+	staff_code number(8) references staff_master,
+	book_issue_date date primary key,
+	book_expected_return_date date not null,
+	book_actual_return_date date	
+);
+
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1000,'sonu','it',2000,'24-feb-2020',4000.00,50,10);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1001,'monu','it',2000,'23-feb-2020',4010.00,40,11);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1002,'arpan','it',2000,'22-feb-2020',4020.00,40,12);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1003,'aditya','sales',2001,'21-feb-2020',5020.00,30,13);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1004,'manish','sales',2000,'23-feb-2020',4020.00,40,14);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1005,'rohan','sales',2000,'23-feb-2020',4020.00,40,15);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1006,'siddharth','finance',2000,'23-feb-2020',6020.00,40,16);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1007,'shailesh','finance',2000,'20-feb-2020',4020.00,40,17);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1008,'abhishek','finance',2003,'21-feb-2020',7020.00,40,18);
+insert into Emp(Empno,Ename,job,mgr,Hiredate,Sal,Comm,Deptno) values (1009,'ajay','finance',2002,'23-feb-2020',4020.00,40,19);
+
+insert into designation_master(design_code,design_name) values (100,'analyst');
+insert into designation_master(design_code,design_name) values (101,'associate');
+insert into designation_master(design_code,design_name) values (102,'hr');
+insert into designation_master(design_code,design_name) values (103,'manager');
+insert into designation_master(design_code,design_name) values (104,'md');
+insert into designation_master(design_code,design_name) values (105,'senior analyst');
+insert into designation_master(design_code,design_name) values (106,'junior analyst');
+insert into designation_master(design_code,design_name) values (107,'developer');
+insert into designation_master(design_code,design_name) values (108,'testing');
+insert into designation_master(design_code,design_name) values (109,'sr manager');
+
+insert into department_master(dept_code,dept_name) values(10,'physics');
+insert into department_master(dept_code,dept_name) values(11,'physics');
+insert into department_master(dept_code,dept_name) values(11,'chem');
+insert into department_master(dept_code,dept_name) values(12,'chem');
+insert into department_master(dept_code,dept_name) values(13,'maths');
+insert into department_master(dept_code,dept_name) values(14,'maths');
+insert into department_master(dept_code,dept_name) values(15,'cs');
+insert into department_master(dept_code,dept_name) values(16,'cs');
+insert into department_master(dept_code,dept_name) values(17,'english');
+insert into department_master(dept_code,dept_name) values(18,'english');
+insert into department_master(dept_code,dept_name) values(19,'physics');
+
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100001,'mehar',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100002,'ajay',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100003,'abhishek',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100004,'samiran',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100005,'sid',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100006,'shashank',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100007,'nikhil',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100008,'ajay',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100009,'arpan',10,'20-feb-1990','pune');
+insert into student_master(student_code, student_name, dept_code, student_dob, student_address) values (100010,'vikas',10,'20-feb-1990','pune');
+
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100001,2010,11,21,31);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100002,2011,12,22,32);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100003,2012,13,23,33);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100004,2013,14,24,34);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100005,2014,15,25,35);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100006,2015,16,26,36);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100007,2016,17,27,37);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100008,2017,18,28,38);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100009,2018,19,29,39);
+insert into student_marks(student_code,student_year,subject1,subject2,subject3) values(100001,2019,10,20,30);
+
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(100,'arpan',101,10,'21-feb-1991','01-jan-1990','pune',1,18000);      
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(101,'arpad',102,11,'22-aug-1992','02-nov-1990','pune',1,10000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(102,'arpar',103,12,'23-mar-1995','03-feb-1990','pune',2,12000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(103,'arpat',104,13,'24-sep-1997','04-oct-1990','pune',2,15000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(104,'arpay',105,14,'25-apr-2000','05-mar-1990','pune',3,16000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(105,'arpau',106,15,'26-oct-2003','06-sep-1990','pune',3,18000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(106,'arpai',107,16,'27-may-2006','07-apr-1990','pune',4,24000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(107,'arpao',108,17,'28-nov-2010','08-aug-1990','pune',4,22000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(108,'arpal',109,18,'29-jun-2014','09-may-1990','pune',5,18000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(109,'arpam',100,19,'21-dec-2017','10-jul-1990','pune',5,12000);
+insert into staff_master(staff_code,staff_name,design_code,dept_code,hiredate,staff_dob,staff_address,mgr_code,staff_sal) values(110,'arpaq',100,10,'22-jul-2020','11-jun-1990','pune',1,15500);
+
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(10,'1 gf',2000,'sonu 1');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(11,'2 gf',2001,'sonu 2');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(12,'3 gf',2002,'sonu 3');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(13,'4 gf',2003,'sonu 4');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(14,'5 gf',2004,'sonu 5');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(15,'6 gf',2005,'sonu 6');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(16,'7 gf',2006,'sonu 7');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(17,'8 gf',2007,'sonu 8');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(18,'9 gf',2008,'sonu 9');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(19,'10 gf',2009,'sonu 10');
+insert into book_master(book_code,book_name,book_pub_year,book_pub_author) values(20,'11 gf',2010,'sonu 11');
+
+
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(10,100001,100,'21-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(11,100002,101,'22-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(12,100003,102,'23-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(13,100004,103,'24-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(14,100005,104,'25-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(15,100006,105,'26-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(16,100007,106,'27-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(17,100008,107,'28-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(18,100009,108,'29-feb-2020','21-feb-2020','21-feb-2021');
+insert into book_transactions(book_code,student_code,staff_code,book_issue_date,book_expected_return_date,book_actual_return_date) values(19,100010,109,'20-feb-2020','21-feb-2020','21-feb-2021');
+
+
+
+
+
+
+
+
+
+
+
+
